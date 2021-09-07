@@ -14,7 +14,6 @@ import com.example.notes.R
 import com.example.notes.domain.Note
 import com.example.notes.domain.NotesRepositoryImpl
 import com.example.notes.ui.SettingsFragment
-import com.example.notes.ui.details.NoteDetailFragment
 import com.example.notes.ui.details.OnNoteClicked
 import com.google.android.material.navigation.NavigationView
 
@@ -49,18 +48,6 @@ class NotesListFragment : Fragment(R.layout.fragment_note_list), NotesListView {
         topAppBar.setNavigationOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
         }
-
-//        childFragmentManager.setFragmentResultListener(
-//            KEY_SELECTED_NOTE,
-//            viewLifecycleOwner, { _, result ->
-//                result.getParcelable<Note>(ARG_NOTE).apply {
-//
-//                    childFragmentManager.beginTransaction()
-//                        .replace(R.id.container, NoteDetailFragment.newInstance(this))
-//                        .commit()
-//                }
-//            }
-//        )
 
         navigationView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
