@@ -9,11 +9,11 @@ import java.util.*
 class NotesRepositoryImpl : NotesRepository {
     override fun getNotes(): List<Note> {
         return listOf(
-            Note("first Note", "some first description", getDate()),
-            Note("second Note", "some sec description", getDate()),
-            Note("third Note", "some third description", getDate()),
-            Note("fourth Note", "some forth description", getDate()),
-            Note("fifth Note", "some fifth description", getDate())
+            Note("first Note", "some first description", Date()),
+            Note("second Note", "some second description", Date()),
+            Note("third Note", "some third description", Date()),
+            Note("fourth Note", "some forth description", Date()),
+            Note("fifth Note", "some fifth description", Date())
         )
     }
 
