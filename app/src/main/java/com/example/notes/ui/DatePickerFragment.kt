@@ -1,4 +1,4 @@
-package com.example.notes.ui.details
+package com.example.notes.ui
 
 import android.app.DatePickerDialog
 import android.app.Dialog

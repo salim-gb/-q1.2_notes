@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Widget.App.Toolbar.OverFlow" parent="Widget.AppCompat.ActionButton.Overflow">
+        <item name="tint">@color/white</item>
+    </style>
+
+    <style name="Widget.App.Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Toolbar</item>
+        <item name="colorControlNormal">@color/yellow</item>
+        <item name="titleTextAppearance">@style/TextAppearance.MaterialComponents.Headline6</item>
+        <item name="subtitleTextAppearance">@style/TextAppearance.MaterialComponents.Subtitle1
+        </item>
+    </style>
+
+    <style name="ThemeOverlay.App.Toolbar" parent="">
+        <item name="colorPrimary">@color/blue_600</item>
+        <item name="colorPrimaryVariant">@color/blueAccent_400</item>
+        <item name="colorOnPrimary">@color/white</item>
+    </style>
+
+    <style name="Widget.App.NavigationView" parent="Widget.MaterialComponents.NavigationView">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.NavigationView</item>
+        <item name="itemIconTint">@color/grey_600</item>
+        <item name="itemTextAppearance">@style/TextAppearance.MaterialComponents.Subtitle1</item>
+        <item name="itemTextColor">@color/black</item>
+        <item name="itemShapeFillColor">@color/navigation_item_background_color</item>
+    </style>
+
+    <style name="ThemeOverlay.App.NavigationView" parent="">
+        <item name="colorPrimary">@color/blue_200</item>
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurface">@color/purple_200</item>
+        <item name="textAppearanceHeadline6">@style/TextAppearance.MaterialComponents.Headline6
+        </item>
+        <item name="textAppearanceSubtitle2">@style/TextAppearance.MaterialComponents.Subtitle2
+        </item>
+        <item name="textAppearanceBody2">@style/TextAppearance.AppCompat.Body2</item>
+        <item name="shapeAppearanceSmallComponent">
+            @style/ShapeAppearance.MaterialComponents.SmallComponent
+        </item>
+    </style>
+</resources>
