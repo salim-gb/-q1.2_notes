@@ -1,12 +1,14 @@
-package com.example.notes.domain
+package com.example.notes.data
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import java.util.*
 
 @Parcelize
-class Note(
+data class Note(
+    val id : Long,
     val title: String,
     val description: String,
-    val creationDate: Date
+    val creationDate: Date,
+    val imageUrl: String
 ) : Parcelable

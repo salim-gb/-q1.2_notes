@@ -10,7 +10,7 @@
         <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/drawable/ic_baseline_menu_24.xml" value="0.18425925925925926" />
         <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/drawable/ic_baseline_share_24.xml" value="0.26481481481481484" />
         <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/drawable/ic_round_add_24.xml" value="0.18425925925925926" />
-        <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/layout-land/activity_main.xml" value="0.146875" />
+        <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/layout-land/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/layout-land/fragment_home.xml" value="0.3064373897707231" />
         <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/layout/activity_main_backup.xml" value="0.29981884057971014" />
@@ -18,10 +18,12 @@
         <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/layout/fragment_home.xml" value="0.18" />
         <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/layout/fragment_note_details.xml" value="0.25" />
         <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/layout/fragment_note_list.xml" value="0.3619791666666667" />
+        <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/layout/fragment_note_update.xml" value="0.22" />
         <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/layout/fragment_notes_list.xml" value="0.13703703703703704" />
         <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/layout/fragment_settings.xml" value="0.29981884057971014" />
-        <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/layout/header_navigation_drawer.xml" value="0.2078804347826087" />
+        <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/layout/header_navigation_drawer.xml" value="0.25" />
         <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/layout/item_note.xml" value="0.25" />
+        <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/layout/item_note_list.xml" value="0.23052536231884058" />
         <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.14537037037037037" />
         <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/menu/navigation_drawer.xml" value="0.3564102564102564" />
         <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/menu/top_app_bar_note_details.xml" value="0.3619791666666667" />

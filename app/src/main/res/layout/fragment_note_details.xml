@@ -48,6 +48,13 @@
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
                 tools:text="First Note" />
 
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/note_image_height"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_launcher_background" />
+
             <TextView
                 android:id="@+id/description"
                 android:layout_width="match_parent"

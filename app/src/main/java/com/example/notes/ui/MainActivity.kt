@@ -3,12 +3,11 @@ package com.example.notes.ui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notes.R
-import com.example.notes.domain.Note
-import com.example.notes.ui.details.NoteDetailFragment
-import com.example.notes.ui.details.OnNoteClicked
-import com.example.notes.ui.list.NotesListFragment
+import com.example.notes.data.Note
+import com.example.notes.noteDetail.NoteDetailFragment
+import com.example.notes.noteList.NotesListFragment
 
-class MainActivity : AppCompatActivity(), OnNoteClicked {
+class MainActivity : AppCompatActivity(), OnNoteClickedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,7 +16,6 @@ class MainActivity : AppCompatActivity(), OnNoteClicked {
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.container, NotesListFragment())
-                .addToBackStack("HomeFragment")
                 .commit()
         }
     }

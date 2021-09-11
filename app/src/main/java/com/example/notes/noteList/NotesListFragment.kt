@@ -1,48 +1,42 @@
-package com.example.notes.ui.list
+package com.example.notes.noteList
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.notes.R
-import com.example.notes.domain.Note
-import com.example.notes.domain.NotesRepositoryImpl
+import com.example.notes.data.Note
+import com.example.notes.ui.OnNoteClickedListener
 import com.example.notes.ui.SettingsFragment
-import com.example.notes.ui.details.OnNoteClicked
 import com.google.android.material.navigation.NavigationView
 
-class NotesListFragment : Fragment(R.layout.fragment_note_list), NotesListView {
+class NotesListFragment : Fragment(R.layout.fragment_note_list) {
+
+    private lateinit var drawerLayout: DrawerLayout
+    private var onNoteClicked: OnNoteClickedListener? = null
+    private var selectedNote: Note? = null
+
+    private val viewModel by viewModels<NotesViewModel> {
+        NotesListViewModelFactory()
+    }
 
     companion object {
         const val KEY_SELECTED_NOTE = "KEY_SELECTED_NOTE"
         const val ARG_NOTE = "ARG_NOTE"
     }
 
-    private lateinit var drawerLayout: DrawerLayout
-    private var selectedNote: Note? = null
-    private lateinit var presenter: NotesListPresenter
-    private var onNoteClicked: OnNoteClicked? = null
-    private lateinit var container: LinearLayout
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        presenter = NotesListPresenter(this, NotesRepositoryImpl())
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        container = view.findViewById(R.id.root)
-        presenter.requestNotes()
 
         val topAppBar: Toolbar = view.findViewById(R.id.topAppBar)
         val navigationView: NavigationView = view.findViewById(R.id.navigationView)
+
         drawerLayout = view.findViewById(R.id.drawerLayout)
 
         topAppBar.setNavigationOnClickListener {
@@ -62,32 +56,24 @@ class NotesListFragment : Fragment(R.layout.fragment_note_list), NotesListView {
             }
             true
         }
+
+        val notesAdapter = NotesAdapter { note -> adapterOnClick(note) }
+        val recyclerView: RecyclerView = view.findViewById(R.id.notes_list)
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            adapter = notesAdapter
+        }
+
+        viewModel.notesLiveData.observe(viewLifecycleOwner, {
+            it?.let {
+                notesAdapter.submitList(it as MutableList<Note>)
+            }
+        })
     }
 
-    override fun showNotes(notes: List<Note>) {
-        for (note in notes) {
-            val noteItem = LayoutInflater.from(context).inflate(
-                R.layout.item_note,
-                container,
-                false
-            )
-
-            noteItem.setOnClickListener {
-
-                onNoteClicked?.onNoteOnClicked(note)
-
-                broadcastNote(note)
-            }
-
-            val noteName = noteItem.findViewById<TextView>(R.id.note_title)
-            val noteDescription = noteItem.findViewById<TextView>(R.id.note_description)
-            val noteCreationDate = noteItem.findViewById<TextView>(R.id.note_creation_date)
-            noteName.text = note.title
-            noteDescription.text = note.description
-            noteCreationDate.text = note.creationDate.toString()
-
-            container.addView(noteItem)
-        }
+    private fun adapterOnClick(note: Note) {
+        selectedNote = note
+        onNoteClicked?.onNoteOnClicked(note)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -98,8 +84,6 @@ class NotesListFragment : Fragment(R.layout.fragment_note_list), NotesListView {
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)
 
-        selectedNote = savedInstanceState?.getParcelable(ARG_NOTE)
-
         if (resources.getBoolean(R.bool.isLandScape)) {
             val bundle = Bundle()
             bundle.putParcelable(ARG_NOTE, selectedNote)
@@ -107,16 +91,9 @@ class NotesListFragment : Fragment(R.layout.fragment_note_list), NotesListView {
         }
     }
 
-    private fun broadcastNote(note: Note) {
-        val bundle = Bundle()
-        bundle.putParcelable(ARG_NOTE, note)
-        parentFragmentManager.setFragmentResult(KEY_SELECTED_NOTE, bundle)
-    }
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
-
-        onNoteClicked = context as? OnNoteClicked
+        onNoteClicked = context as? OnNoteClickedListener
     }
 
     override fun onDetach() {
