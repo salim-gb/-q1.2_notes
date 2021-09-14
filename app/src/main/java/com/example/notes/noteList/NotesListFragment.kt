@@ -2,7 +2,10 @@ package com.example.notes.noteList
 
 import android.content.Context
 import android.os.Bundle
+import android.view.ContextMenu
+import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -13,12 +16,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.notes.R
 import com.example.notes.data.Note
 import com.example.notes.ui.OnNoteClickedListener
+import com.example.notes.ui.Router
 import com.example.notes.ui.SettingsFragment
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
 
 class NotesListFragment : Fragment(R.layout.fragment_note_list) {
-
+    private lateinit var router: Router
     private lateinit var drawerLayout: DrawerLayout
+    private lateinit var notesAdapter: NotesAdapter
     private var onNoteClicked: OnNoteClickedListener? = null
     private var selectedNote: Note? = null
 
@@ -29,6 +36,16 @@ class NotesListFragment : Fragment(R.layout.fragment_note_list) {
     companion object {
         const val KEY_SELECTED_NOTE = "KEY_SELECTED_NOTE"
         const val ARG_NOTE = "ARG_NOTE"
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        router = Router(parentFragmentManager)
+
+        notesAdapter = NotesAdapter(this,
+            { note -> adapterOnClick(note) },
+            { note -> adapterOnLongClick(note) })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,13 +60,15 @@ class NotesListFragment : Fragment(R.layout.fragment_note_list) {
             drawerLayout.openDrawer(GravityCompat.START)
         }
 
+        view.findViewById<FloatingActionButton>(R.id.fab).
+            setOnClickListener {
+                router.showNoteAdd()
+            }
+
         navigationView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.settings -> {
-                    parentFragmentManager.beginTransaction()
-                        .replace(R.id.container, SettingsFragment())
-                        .addToBackStack("HomeFragment")
-                        .commit()
+                    router.showSettingsFragment()
                     drawerLayout.closeDrawer(GravityCompat.START)
                     menuItem.isChecked = true
                 }
@@ -57,7 +76,6 @@ class NotesListFragment : Fragment(R.layout.fragment_note_list) {
             true
         }
 
-        val notesAdapter = NotesAdapter { note -> adapterOnClick(note) }
         val recyclerView: RecyclerView = view.findViewById(R.id.notes_list)
         recyclerView.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -76,6 +94,10 @@ class NotesListFragment : Fragment(R.layout.fragment_note_list) {
         onNoteClicked?.onNoteOnClicked(note)
     }
 
+    private fun adapterOnLongClick(note: Note) {
+        selectedNote = note
+    }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putParcelable(ARG_NOTE, selectedNote)
@@ -88,6 +110,33 @@ class NotesListFragment : Fragment(R.layout.fragment_note_list) {
             val bundle = Bundle()
             bundle.putParcelable(ARG_NOTE, selectedNote)
             childFragmentManager.setFragmentResult(KEY_SELECTED_NOTE, bundle)
+        }
+    }
+
+    override fun onCreateContextMenu(
+        menu: ContextMenu,
+        v: View,
+        menuInfo: ContextMenu.ContextMenuInfo?
+    ) {
+        super.onCreateContextMenu(menu, v, menuInfo)
+
+        requireActivity().menuInflater.inflate(R.menu.menu_notes_list_context, menu)
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_delete -> {
+                Snackbar.make(requireView(), "Delete ${selectedNote?.title}", Snackbar.LENGTH_SHORT)
+                    .show()
+                true
+            }
+
+            R.id.action_update -> {
+                Snackbar.make(requireView(), "Update ${selectedNote?.title}", Snackbar.LENGTH_SHORT)
+                    .show()
+                true
+            }
+            else -> return super.onContextItemSelected(item)
         }
     }
 

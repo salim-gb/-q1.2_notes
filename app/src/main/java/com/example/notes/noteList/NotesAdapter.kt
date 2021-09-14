@@ -5,6 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -12,10 +14,18 @@ import com.bumptech.glide.Glide
 import com.example.notes.R
 import com.example.notes.data.Note
 
-class NotesAdapter(private val onClick: (Note) -> Unit) :
+class NotesAdapter(
+    private val fragment: Fragment,
+    private val onClick: (Note) -> Unit,
+    private val onLongClick: (Note) -> Unit
+) :
     ListAdapter<Note, NotesAdapter.NotesViewHolder>(NoteDiffCallback) {
 
-    class NotesViewHolder(itemView: View, val onClick: (Note) -> Unit) :
+    inner class NotesViewHolder(
+        itemView: View,
+        val onClick: (Note) -> Unit,
+        val onLongClick: (Note) -> Unit
+    ) :
         RecyclerView.ViewHolder(itemView) {
         private val noteTitle: TextView = itemView.findViewById(R.id.note_title)
         private val noteDescription: TextView = itemView.findViewById(R.id.note_description)
@@ -24,6 +34,18 @@ class NotesAdapter(private val onClick: (Note) -> Unit) :
         private var currentNote: Note? = null
 
         init {
+            fragment.registerForContextMenu(itemView)
+
+            itemView.setOnLongClickListener {
+
+                itemView.showContextMenu()
+
+                currentNote?.let {
+                    onLongClick(it)
+                }
+                return@setOnLongClickListener true
+            }
+
             itemView.setOnClickListener {
                 currentNote?.let {
                     onClick(it)
@@ -44,7 +66,7 @@ class NotesAdapter(private val onClick: (Note) -> Unit) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotesViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_note_list, parent, false)
-        return NotesViewHolder(view, onClick)
+        return NotesViewHolder(view, onClick, onLongClick)
     }
 
     override fun onBindViewHolder(holder: NotesViewHolder, position: Int) {

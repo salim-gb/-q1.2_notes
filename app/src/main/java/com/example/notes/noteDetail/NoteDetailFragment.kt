@@ -56,7 +56,7 @@ class NoteDetailFragment : Fragment(R.layout.fragment_note_details) {
             when (it.itemId) {
                 R.id.change -> {
                     parentFragmentManager.beginTransaction()
-                        .replace(R.id.container, NoteUpdateFragment().newInstance(currentNote))
+                        .replace(R.id.container, NoteUpdateFragment.newInstance(currentNote))
                         .addToBackStack(null)
                         .commit()
                     true
