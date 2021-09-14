@@ -1,27 +1,34 @@
-package com.example.notes.ui.details
+package com.example.notes.noteDetail
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
 import com.example.notes.R
-import com.example.notes.domain.Note
-import com.example.notes.domain.NotesRepositoryImpl
-import com.example.notes.ui.DatePickerFragment
-import com.example.notes.ui.list.NotesListFragment
-import com.example.notes.ui.list.NotesListPresenter
-import com.example.notes.ui.list.NotesListView
+import com.example.notes.data.Note
+import com.example.notes.noteList.NotesListViewModelFactory
+import com.example.notes.noteList.NotesViewModel
+import com.example.notes.noteUpdate.NoteUpdateFragment
 
-class NoteDetailFragment : Fragment(R.layout.fragment_note_details), NotesListView {
+class NoteDetailFragment : Fragment(R.layout.fragment_note_details) {
 
-    private lateinit var presenter: NotesListPresenter
+    private val viewModel by viewModels<NotesViewModel> {
+        NotesListViewModelFactory()
+    }
+
     private lateinit var noteTitle: TextView
     private lateinit var noteDescription: TextView
     private lateinit var noteDate: TextView
+    private lateinit var noteImage: ImageView
+    private var currentNote: Note? = null
 
     companion object {
         private const val ARG_NOTE = "ARG_NOTE"
+        private const val KEY_CURRENT_NOTE = "KEY_CURRENT_NOTE"
         private const val ARG_DATE = "ARG_DATE"
 
         fun newInstance(note: Note?) =
@@ -32,21 +39,30 @@ class NoteDetailFragment : Fragment(R.layout.fragment_note_details), NotesListVi
             }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        presenter = NotesListPresenter(this, NotesRepositoryImpl())
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val toolbar: Toolbar = view.findViewById(R.id.note_details_toolbar)
-        noteTitle = view.findViewById(R.id.title)
-        noteDescription = view.findViewById(R.id.description)
+
         noteDate = view.findViewById(R.id.date)
+        noteTitle = view.findViewById(R.id.title)
+        noteImage = view.findViewById(R.id.image)
+        noteDescription = view.findViewById(R.id.description)
 
         toolbar.setNavigationOnClickListener {
             parentFragmentManager.popBackStack()
+        }
+
+        toolbar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.change -> {
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.container, NoteUpdateFragment().newInstance(currentNote))
+                        .addToBackStack(null)
+                        .commit()
+                    true
+                }
+                else -> super.onOptionsItemSelected(it)
+            }
         }
 
         noteDate.setOnClickListener {
@@ -54,28 +70,18 @@ class NoteDetailFragment : Fragment(R.layout.fragment_note_details), NotesListVi
             newFragment.show(parentFragmentManager, "datePicker")
         }
 
-        presenter.requestNotes()
-
         parentFragmentManager.setFragmentResultListener(
-            DatePickerFragment.ARG_DATE_SELECTED,
+            KEY_CURRENT_NOTE,
             viewLifecycleOwner, { _, result ->
-                result.getString(ARG_DATE).also {
-                    noteDate.text = it
-                }
-            }
-        )
-
-        parentFragmentManager.setFragmentResultListener(
-            NotesListFragment.KEY_SELECTED_NOTE,
-            viewLifecycleOwner, { _, result ->
-                result.getParcelable<Note>(ARG_NOTE).also {
-                    displayNote(it)
-                }
+                val title = result.get(NoteUpdateFragment.NOTE_TITLE)
+                val description = result.get(NoteUpdateFragment.NOTE_DES)
+                viewModel.updateNote(title.toString(), description.toString())
             }
         )
 
         if (arguments?.containsKey(ARG_NOTE) == true) {
             arguments?.getParcelable<Note>(ARG_NOTE).also {
+                currentNote = it
                 displayNote(it)
             }
         }
@@ -86,10 +92,7 @@ class NoteDetailFragment : Fragment(R.layout.fragment_note_details), NotesListVi
             noteTitle.text = note.title
             noteDescription.text = note.description
             noteDate.text = note.creationDate.toString()
+            Glide.with(requireContext()).load(note.imageUrl).centerCrop().into(noteImage)
         }
-    }
-
-    override fun showNotes(notes: List<Note>) {
-        displayNote(notes.first())
     }
 }

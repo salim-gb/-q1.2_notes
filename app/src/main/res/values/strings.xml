@@ -16,4 +16,7 @@
     <string name="change">change</string>
     <string name="delete">delete</string>
     <string name="share">share</string>
+    <string name="update_button_text">update</string>
+    <string name="title">title</string>
+    <string name="description">description</string>
 </resources>
