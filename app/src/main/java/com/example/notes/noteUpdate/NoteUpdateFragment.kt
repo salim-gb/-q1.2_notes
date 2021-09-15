@@ -20,14 +20,14 @@ class NoteUpdateFragment : Fragment(R.layout.fragment_note_update) {
         const val KEY_CURRENT_NOTE = "KEY_CURRENT_NOTE"
         const val NOTE_TITLE = "NOTE_TITLE"
         const val NOTE_DES = "NOTE_DES"
-    }
 
-    fun newInstance(note: Note?) =
-        NoteUpdateFragment().apply {
-            arguments = Bundle().apply {
-                putParcelable(ARG_NOTE, note)
+        fun newInstance(note: Note?) =
+            NoteUpdateFragment().apply {
+                arguments = Bundle().apply {
+                    putParcelable(ARG_NOTE, note)
+                }
             }
-        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
