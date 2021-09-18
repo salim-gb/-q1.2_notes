@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -16,14 +15,14 @@ import com.example.notes.data.Note
 
 class NotesAdapter(
     private val fragment: Fragment,
-    private val onClick: (Note) -> Unit,
+    private val onClick: (Note, Int) -> Unit,
     private val onLongClick: (Note) -> Unit
 ) :
     ListAdapter<Note, NotesAdapter.NotesViewHolder>(NoteDiffCallback) {
 
     inner class NotesViewHolder(
         itemView: View,
-        val onClick: (Note) -> Unit,
+        val onClick: (Note, Int) -> Unit,
         val onLongClick: (Note) -> Unit
     ) :
         RecyclerView.ViewHolder(itemView) {
@@ -48,7 +47,7 @@ class NotesAdapter(
 
             itemView.setOnClickListener {
                 currentNote?.let {
-                    onClick(it)
+                    onClick(it, adapterPosition)
                 }
             }
         }

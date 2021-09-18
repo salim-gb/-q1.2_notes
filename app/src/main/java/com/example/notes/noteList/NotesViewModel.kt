@@ -5,15 +5,14 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.notes.data.DataSource
 import com.example.notes.data.Note
 import java.util.*
-import kotlin.random.Random
 
 
 class NotesViewModel(val dataSource: DataSource) : ViewModel() {
 
     val notesLiveData = dataSource.getNoteList()
 
-    fun insertNote(noteTitle: String?, noteDescription: String?) {
-        if (noteTitle == null || noteDescription == null) {
+    fun insertNote(note: Note?) {
+        if (note?.title == null || note.description == null) {
             return
         }
 
@@ -21,9 +20,9 @@ class NotesViewModel(val dataSource: DataSource) : ViewModel() {
             "https://images.freeimages.com/images/large-previews/89a/one-tree-hill-1360813.jpg"
 
         val newNote = Note(
-            Random.nextLong(),
-            noteTitle,
-            noteDescription,
+            "",
+            note.title,
+            note.description,
             Date(),
             image
         )
@@ -31,8 +30,12 @@ class NotesViewModel(val dataSource: DataSource) : ViewModel() {
         dataSource.addNote(newNote)
     }
 
-    fun updateNote(noteTitle: String?, noteDescription: String?) {
+    fun updateNote(note: Note, position: Int?) {
+        dataSource.updateNote(note, position)
+    }
 
+    fun removeNote(note: Note?) {
+        dataSource.removeNote(note)
     }
 }
 

@@ -62,8 +62,9 @@
         android:id="@+id/add_button"
         style="?attr/materialButtonOutlinedStyle"
         android:layout_width="240dp"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/update_button_text" />
+        android:text="@string/add" />
 
 </LinearLayout>

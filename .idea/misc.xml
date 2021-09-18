@@ -10,18 +10,20 @@
         <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/drawable/ic_baseline_menu_24.xml" value="0.18425925925925926" />
         <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/drawable/ic_baseline_share_24.xml" value="0.26481481481481484" />
         <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/drawable/ic_round_add_24.xml" value="0.18425925925925926" />
+        <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/drawable/ic_vk.xml" value="0.37864583333333335" />
         <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/layout-land/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/layout-land/fragment_home.xml" value="0.3064373897707231" />
         <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/layout/activity_main_backup.xml" value="0.29981884057971014" />
         <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/layout/activity_note_details.xml" value="0.13703703703703704" />
         <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/layout/fragment_add_note.xml" value="0.2427536231884058" />
+        <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/layout/fragment_auth.xml" value="0.15833333333333333" />
         <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/layout/fragment_home.xml" value="0.18" />
         <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/layout/fragment_note_details.xml" value="0.25" />
         <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/layout/fragment_note_list.xml" value="0.17603850050658562" />
         <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/layout/fragment_note_update.xml" value="0.22" />
         <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/layout/fragment_notes_list.xml" value="0.13703703703703704" />
-        <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/layout/fragment_settings.xml" value="0.29981884057971014" />
+        <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/layout/fragment_settings.xml" value="0.18" />
         <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/layout/header_navigation_drawer.xml" value="0.25" />
         <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/layout/item_note.xml" value="0.25" />
         <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/layout/item_note_list.xml" value="0.23052536231884058" />
@@ -37,5 +39,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.15833333333333333" />
+      </ProjectState>
+    </option>
   </component>
 </project>

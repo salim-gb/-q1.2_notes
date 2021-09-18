@@ -14,13 +14,20 @@
     <string name="note_details">Note Details</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="change">change</string>
-    <string name="delete">delete</string>
     <string name="share">share</string>
-    <string name="update_button_text">update</string>
+    <string name="update">update</string>
     <string name="title">title</string>
     <string name="description">description</string>
-    <string name="action_delete">Delete</string>
-    <string name="action_update">Update</string>
-    <string name="action_remove">Remove</string>
+    <string name="delete">Delete</string>
+    <string name="remove">Remove</string>
     <string name="add">Add</string>
+    <string name="sing_in_please">Sing in please</string>
+    <string name="server_client_id">831360024639-v0mlif75dc53lrucek6eiab1tdspipal.apps.googleusercontent.com</string>
+    <string name="sign_out">Sign out</string>
+    <string name="sign_in_with_vk">Sign in with VK</string>
+    <string name="message_connection_error">Connection Error</string>
+    <string name="message_unknown_error">Unknown Error</string>
+    <string name="user_image">User Image</string>
+    <string name="image_user">image_user</string>
+    <integer name="com_vk_sdk_AppId">7954999</integer>
 </resources>
