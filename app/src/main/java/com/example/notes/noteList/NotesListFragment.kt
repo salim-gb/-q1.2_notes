@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.view.ContextMenu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -15,9 +15,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notes.R
 import com.example.notes.data.Note
+import com.example.notes.noteInsert.NoteAddFragment
 import com.example.notes.ui.OnNoteClickedListener
 import com.example.notes.ui.Router
-import com.example.notes.ui.SettingsFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
@@ -25,6 +25,7 @@ import com.google.android.material.snackbar.Snackbar
 class NotesListFragment : Fragment(R.layout.fragment_note_list) {
     private lateinit var router: Router
     private lateinit var drawerLayout: DrawerLayout
+    private lateinit var recyclerView: RecyclerView
     private lateinit var notesAdapter: NotesAdapter
     private var onNoteClicked: OnNoteClickedListener? = null
     private var selectedNote: Note? = null
@@ -44,7 +45,7 @@ class NotesListFragment : Fragment(R.layout.fragment_note_list) {
         router = Router(parentFragmentManager)
 
         notesAdapter = NotesAdapter(this,
-            { note -> adapterOnClick(note) },
+            { note, position -> adapterOnClick(note, position) },
             { note -> adapterOnLongClick(note) })
     }
 
@@ -60,10 +61,9 @@ class NotesListFragment : Fragment(R.layout.fragment_note_list) {
             drawerLayout.openDrawer(GravityCompat.START)
         }
 
-        view.findViewById<FloatingActionButton>(R.id.fab).
-            setOnClickListener {
-                router.showNoteAdd()
-            }
+        view.findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {
+            router.showNoteAdd()
+        }
 
         navigationView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
@@ -76,7 +76,7 @@ class NotesListFragment : Fragment(R.layout.fragment_note_list) {
             true
         }
 
-        val recyclerView: RecyclerView = view.findViewById(R.id.notes_list)
+        recyclerView = view.findViewById(R.id.notes_list)
         recyclerView.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = notesAdapter
@@ -87,11 +87,17 @@ class NotesListFragment : Fragment(R.layout.fragment_note_list) {
                 notesAdapter.submitList(it as MutableList<Note>)
             }
         })
+
+        parentFragmentManager.setFragmentResultListener(
+            NoteAddFragment.KEY_NOTE_ADDED, viewLifecycleOwner, { _, result ->
+                val note = result.getParcelable<Note>(NoteAddFragment.ARG_NOTE)
+                viewModel.insertNote(note)
+            })
     }
 
-    private fun adapterOnClick(note: Note) {
+    private fun adapterOnClick(note: Note, position: Int) {
         selectedNote = note
-        onNoteClicked?.onNoteOnClicked(note)
+        onNoteClicked?.onNoteOnClicked(note, position)
     }
 
     private fun adapterOnLongClick(note: Note) {
@@ -107,9 +113,10 @@ class NotesListFragment : Fragment(R.layout.fragment_note_list) {
         super.onViewStateRestored(savedInstanceState)
 
         if (resources.getBoolean(R.bool.isLandScape)) {
-            val bundle = Bundle()
-            bundle.putParcelable(ARG_NOTE, selectedNote)
-            childFragmentManager.setFragmentResult(KEY_SELECTED_NOTE, bundle)
+            childFragmentManager.setFragmentResult(
+                KEY_SELECTED_NOTE,
+                bundleOf(ARG_NOTE to selectedNote)
+            )
         }
     }
 

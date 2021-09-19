@@ -13,3 +13,5 @@
 .externalNativeBuild
 .cxx
 local.properties
+/passwards.txt
+/key.keystore.jks

@@ -6,7 +6,7 @@ import java.util.*
 
 @Parcelize
 data class Note(
-    val id : Long,
+    val id : String,
     val title: String,
     val description: String,
     val creationDate: Date,

@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.app.Dialog
 import android.os.Bundle
 import android.widget.DatePicker
+import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import java.util.*
 
@@ -26,8 +27,6 @@ class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener 
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         val date = "$year.$month.$dayOfMonth "
-        val bundle = Bundle()
-        bundle.putString(ARG_DATE, date)
-        parentFragmentManager.setFragmentResult(ARG_DATE_SELECTED, bundle)
+        parentFragmentManager.setFragmentResult(ARG_DATE_SELECTED, bundleOf(ARG_DATE to date))
     }
 }

@@ -7,4 +7,8 @@
     <dimen name="margin_32">32dp</dimen>
     <dimen name="margin_64">64dp</dimen>
     <dimen name="margin_22">22dp</dimen>
+    <dimen name="default_padding">16dp</dimen>
+    <dimen name="horizontal_padding_36">36dp</dimen>
+    <dimen name="vertical_padding_8">8dp</dimen>
+    <dimen name="medium_text_size">18sp</dimen>
 </resources>
