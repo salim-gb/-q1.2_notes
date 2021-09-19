@@ -18,6 +18,7 @@
         <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/layout/activity_note_details.xml" value="0.13703703703703704" />
         <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/layout/fragment_add_note.xml" value="0.2427536231884058" />
         <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/layout/fragment_auth.xml" value="0.15833333333333333" />
+        <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/layout/fragment_custom_dialog.xml" value="0.1" />
         <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/layout/fragment_home.xml" value="0.18" />
         <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/layout/fragment_note_details.xml" value="0.25" />
         <entry key="..\:/Users/Salim/AndroidStudioProjects/Notes/app/src/main/res/layout/fragment_note_list.xml" value="0.17603850050658562" />
@@ -43,7 +44,7 @@
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>
-        <option name="scale" value="0.15833333333333333" />
+        <option name="scale" value="0.33" />
       </ProjectState>
     </option>
   </component>

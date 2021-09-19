@@ -16,14 +16,14 @@ import com.example.notes.data.Note
 class NotesAdapter(
     private val fragment: Fragment,
     private val onClick: (Note, Int) -> Unit,
-    private val onLongClick: (Note) -> Unit
+    private val onLongClick: (Note, Int) -> Unit
 ) :
     ListAdapter<Note, NotesAdapter.NotesViewHolder>(NoteDiffCallback) {
 
     inner class NotesViewHolder(
         itemView: View,
         val onClick: (Note, Int) -> Unit,
-        val onLongClick: (Note) -> Unit
+        val onLongClick: (Note, Int) -> Unit
     ) :
         RecyclerView.ViewHolder(itemView) {
         private val noteTitle: TextView = itemView.findViewById(R.id.note_title)
@@ -40,7 +40,7 @@ class NotesAdapter(
                 itemView.showContextMenu()
 
                 currentNote?.let {
-                    onLongClick(it)
+                    onLongClick(it, adapterPosition)
                 }
                 return@setOnLongClickListener true
             }

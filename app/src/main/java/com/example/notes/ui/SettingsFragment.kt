@@ -11,6 +11,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.notes.R
+import com.example.notes.vk.VKUser
+import com.example.notes.vk.VKUsersCommand
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.vk.api.sdk.VK

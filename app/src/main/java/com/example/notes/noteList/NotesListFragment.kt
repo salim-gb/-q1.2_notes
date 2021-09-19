@@ -1,6 +1,7 @@
 package com.example.notes.noteList
 
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.ContextMenu
 import android.view.MenuItem
@@ -10,17 +11,19 @@ import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notes.R
 import com.example.notes.data.Note
 import com.example.notes.noteInsert.NoteAddFragment
+import com.example.notes.ui.AlertDialogFragment
+import com.example.notes.ui.CustomDialogFragment
 import com.example.notes.ui.OnNoteClickedListener
 import com.example.notes.ui.Router
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
-import com.google.android.material.snackbar.Snackbar
 
 class NotesListFragment : Fragment(R.layout.fragment_note_list) {
     private lateinit var router: Router
@@ -29,6 +32,7 @@ class NotesListFragment : Fragment(R.layout.fragment_note_list) {
     private lateinit var notesAdapter: NotesAdapter
     private var onNoteClicked: OnNoteClickedListener? = null
     private var selectedNote: Note? = null
+    private var currentPosition: Int? = null
 
     private val viewModel by viewModels<NotesViewModel> {
         NotesListViewModelFactory()
@@ -46,7 +50,7 @@ class NotesListFragment : Fragment(R.layout.fragment_note_list) {
 
         notesAdapter = NotesAdapter(this,
             { note, position -> adapterOnClick(note, position) },
-            { note -> adapterOnLongClick(note) })
+            { note, position -> adapterOnLongClick(note, position) })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -93,6 +97,18 @@ class NotesListFragment : Fragment(R.layout.fragment_note_list) {
                 val note = result.getParcelable<Note>(NoteAddFragment.ARG_NOTE)
                 viewModel.insertNote(note)
             })
+
+        setFragmentResultListener(AlertDialogFragment.KEY) { _, bundle ->
+            bundle.getInt(AlertDialogFragment.ARG_WHICH).let {
+                when (it) {
+                    DialogInterface.BUTTON_POSITIVE -> {
+                        viewModel.removeNote(selectedNote)
+                    }
+                    DialogInterface.BUTTON_NEGATIVE -> {
+                    }
+                }
+            }
+        }
     }
 
     private fun adapterOnClick(note: Note, position: Int) {
@@ -100,8 +116,9 @@ class NotesListFragment : Fragment(R.layout.fragment_note_list) {
         onNoteClicked?.onNoteOnClicked(note, position)
     }
 
-    private fun adapterOnLongClick(note: Note) {
+    private fun adapterOnLongClick(note: Note, position: Int) {
         selectedNote = note
+        currentPosition = position
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -133,14 +150,17 @@ class NotesListFragment : Fragment(R.layout.fragment_note_list) {
     override fun onContextItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_delete -> {
-                Snackbar.make(requireView(), "Delete ${selectedNote?.title}", Snackbar.LENGTH_SHORT)
-                    .show()
+                AlertDialogFragment.newInstance(
+                    R.drawable.ic_delete_gray_24,
+                    R.string.delete_confirm,
+                    R.string.delete_confirm_message
+                ).show(parentFragmentManager, "AlertDialogFragment")
                 true
             }
 
             R.id.action_update -> {
-                Snackbar.make(requireView(), "Update ${selectedNote?.title}", Snackbar.LENGTH_SHORT)
-                    .show()
+                CustomDialogFragment.newInstance(selectedNote!!, currentPosition!!)
+                    .show(parentFragmentManager, "customDialogFragment")
                 true
             }
             else -> return super.onContextItemSelected(item)

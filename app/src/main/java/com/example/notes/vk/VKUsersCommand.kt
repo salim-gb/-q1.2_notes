@@ -22,7 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 
-package com.example.notes.ui
+package com.example.notes.vk
 
 import com.vk.api.sdk.VKApiManager
 import com.vk.api.sdk.VKApiResponseParser

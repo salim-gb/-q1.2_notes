@@ -1,5 +1,6 @@
 package com.example.notes.noteDetail
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
@@ -13,6 +14,7 @@ import com.example.notes.R
 import com.example.notes.data.Note
 import com.example.notes.noteList.NotesListViewModelFactory
 import com.example.notes.noteList.NotesViewModel
+import com.example.notes.ui.AlertDialogFragment
 import com.example.notes.ui.Router
 
 private const val ARG_NOTE = "ARG_NOTE"
@@ -82,11 +84,28 @@ class NoteDetailFragment : Fragment(R.layout.fragment_note_details) {
                     true
                 }
                 R.id.delete -> {
-                    viewModel.removeNote(currentNote)
-                    parentFragmentManager.popBackStack()
+                    AlertDialogFragment.newInstance(
+                        R.drawable.ic_delete_gray_24,
+                        R.string.delete_confirm,
+                        R.string.delete_confirm_message
+                    )
+                        .show(parentFragmentManager, "AlertDialogFragment")
                     true
                 }
                 else -> super.onOptionsItemSelected(it)
+            }
+        }
+
+        setFragmentResultListener(AlertDialogFragment.KEY) { _, bundle ->
+            bundle.getInt(AlertDialogFragment.ARG_WHICH).let {
+                when (it) {
+                    DialogInterface.BUTTON_POSITIVE -> {
+                        viewModel.removeNote(currentNote)
+                        parentFragmentManager.popBackStack()
+                    }
+                    DialogInterface.BUTTON_NEGATIVE -> {
+                    }
+                }
             }
         }
 

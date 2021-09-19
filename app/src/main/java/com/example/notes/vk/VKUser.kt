@@ -22,7 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 
-package com.example.notes.ui
+package com.example.notes.vk
 
 import android.os.Parcel
 import android.os.Parcelable
